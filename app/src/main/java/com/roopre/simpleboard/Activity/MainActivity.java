@@ -1,10 +1,14 @@
-package com.roopre.simpleboard;
+package com.roopre.simpleboard.Activity;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
+
+import com.roopre.simpleboard.Fragment.LoginFragment;
+import com.roopre.simpleboard.Fragment.MainFragment;
+import com.roopre.simpleboard.R;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,10 +56,14 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         if(savedInstanceState == null){
-            MainFragment mainFragment = new MainFragment();
+            LoginFragment loginFragment = new LoginFragment();
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.mainFragment, mainFragment, "MAIN")
+                    .replace(R.id.mainFragment, loginFragment, "LOGIN")
                     .commit();
+//            MainFragment mainFragment = new MainFragment();
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.mainFragment, mainFragment, "MAIN")
+//                    .commit();
         }
 
     }

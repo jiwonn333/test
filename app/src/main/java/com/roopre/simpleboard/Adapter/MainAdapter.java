@@ -1,4 +1,4 @@
-package com.roopre.simpleboard;
+package com.roopre.simpleboard.Adapter;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.roopre.simpleboard;
+package com.roopre.simpleboard.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,20 +7,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.roopre.simpleboard.R;
+
 import androidx.fragment.app.Fragment;
 
-public class GalleryFragment extends Fragment implements View.OnClickListener {
+public class PopBoardFragment extends Fragment implements View.OnClickListener {
 
     View rootView;
     EditText msg_et;
     Button send_btn;
 
-    public GalleryFragment() {
+    public PopBoardFragment() {
     }
 
 
-    public static GalleryFragment newInstance(String param1, String param2) {
-        GalleryFragment fragment = new GalleryFragment();
+    public static PopBoardFragment newInstance(String param1, String param2) {
+        PopBoardFragment fragment = new PopBoardFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -35,7 +37,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_gallery, container, false);;
+        rootView = inflater.inflate(R.layout.fragment_pop_board, container, false);;
 
         msg_et = rootView.findViewById(R.id.msg_et);
         send_btn = rootView.findViewById(R.id.send_btn);

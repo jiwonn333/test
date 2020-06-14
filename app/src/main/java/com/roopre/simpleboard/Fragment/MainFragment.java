@@ -1,10 +1,13 @@
-package com.roopre.simpleboard;
+package com.roopre.simpleboard.Fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.roopre.simpleboard.Adapter.MainAdapter;
+import com.roopre.simpleboard.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,15 +48,15 @@ public class MainFragment extends Fragment {
 
         viewPager = rootView.findViewById(R.id.viewPager);
 
-        GalleryFragment galleryFragment = new GalleryFragment();
-        HomeFragment homeFragment = new HomeFragment();
-        SlideShowFragment slideShowFragment = new SlideShowFragment();
+        PopBoardFragment popBoardFragment = new PopBoardFragment();
+        BoardListFragment boardListFragment = new BoardListFragment();
+        AlertFragment alertFragment = new AlertFragment();
 
 
         fragments.clear();
-        fragments.add(galleryFragment);
-        fragments.add(homeFragment);
-        fragments.add(slideShowFragment);
+        fragments.add(popBoardFragment);
+        fragments.add(boardListFragment);
+        fragments.add(alertFragment);
 
         mainAdapter = new MainAdapter(getChildFragmentManager(), fragments);
         mainAdapter.notifyDataSetChanged();
@@ -65,25 +68,25 @@ public class MainFragment extends Fragment {
         final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_menu_gallery),
+                        getResources().getDrawable(R.drawable.ic_star),
                         Color.parseColor("#FF0000")
-                ).title("Gallery")
+                ).title("인기게시물")
                         .badgeTitle("NTB")
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_home),
+                        getResources().getDrawable(R.drawable.ic_board),
                         Color.parseColor("#00FF00")
-                ).title("Home")
+                ).title("게시판")
                         .badgeTitle("with")
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_menu_slideshow),
+                        getResources().getDrawable(R.drawable.ic_noti),
                         Color.parseColor("#0000FF")
-                ).title("Show")
+                ).title("알")
                         .badgeTitle("state")
                         .build()
         );

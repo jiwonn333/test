@@ -1,28 +1,24 @@
-package com.roopre.simpleboard;
+package com.roopre.simpleboard.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.roopre.simpleboard.R;
+
 import androidx.fragment.app.Fragment;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SlideShowFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SlideShowFragment extends Fragment {
+public class BoardListFragment extends Fragment {
 
     View rootView;
-    public SlideShowFragment() {
+    public BoardListFragment() {
         // Required empty public constructor
     }
 
-    public static SlideShowFragment newInstance(String param1, String param2) {
-        SlideShowFragment fragment = new SlideShowFragment();
+    public static BoardListFragment newInstance(String param1, String param2) {
+        BoardListFragment fragment = new BoardListFragment();
         Bundle args = new Bundle();
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -30,14 +26,14 @@ public class SlideShowFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_slideshow, container, false);;
+        rootView = inflater.inflate(R.layout.fragment_board_list, container, false);;
 
         return rootView;
     }
+
 }
