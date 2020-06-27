@@ -56,7 +56,7 @@ public class PopBoardFragment extends Fragment implements View.OnClickListener {
                 argu.putString("msg", msg_et.getText().toString());
 
                 // 이동할 Fragment 선언
-                GalleryDetailFragment galleryDetailFragment = new GalleryDetailFragment();
+                ChatFragment galleryDetailFragment = new ChatFragment();
 
                 // 이동할 Fragment 에 데이터 객체 담기
                 galleryDetailFragment.setArguments(argu);

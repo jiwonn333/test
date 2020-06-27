@@ -12,22 +12,22 @@ import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link GalleryDetailFragment#newInstance} factory method to
+ * Use the {@link ChatFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GalleryDetailFragment extends Fragment {
+public class ChatFragment extends Fragment {
 
     TextView msg_tv;
 
     View rootView;
 
-    public GalleryDetailFragment() {
+    public ChatFragment() {
         // Required empty public constructor
     }
 
 
-    public static GalleryDetailFragment newInstance(String param1, String param2) {
-        GalleryDetailFragment fragment = new GalleryDetailFragment();
+    public static ChatFragment newInstance(String param1, String param2) {
+        ChatFragment fragment = new ChatFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);

@@ -110,6 +110,7 @@ public class LoginFragment extends Fragment implements CompoundButton.OnCheckedC
             case R.id.login_btn:
                 if(CheckValid()){
                     // 입력이 정상적이면 로그인 확인하고 MainFragment 로 이동
+                    new LoginTask().execute();
                 }
                 break;
             case R.id.join_btn:
@@ -127,12 +128,64 @@ public class LoginFragment extends Fragment implements CompoundButton.OnCheckedC
         if(userid_et.getText().toString().trim().length() < 5){
             Toast.makeText(getActivity(), "이메일을 입력하세요", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(passwd_et.getText().toString().trim().length() < 6){
-            Toast.makeText(getActivity(), "비밀번호를 6자 이상 입력하세요", Toast.LENGTH_SHORT).show();
+        }else if(passwd_et.getText().toString().trim().length() < 4){
+            Toast.makeText(getActivity(), "비밀번호를 4자 이상 입력하세요", Toast.LENGTH_SHORT).show();
             return false;
         }else {
             return true;
         }
     }
 
+
+
+    class LoginTask extends AsyncTask<String, Void, String> {
+
+        OkHttpClient client = new OkHttpClient();
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String result = null;
+
+            HttpUrl httpUrl = new HttpUrl.Builder()
+                    .scheme("http")
+                    .host(Se_Application.Server_URL)
+                    .addPathSegment("user_login.php")
+                    .addQueryParameter("userid", userid_et.getText().toString().trim())
+                    .addQueryParameter("passwd", passwd_et.getText().toString().trim())
+                    .build();
+            try {
+                Request request = new Request.Builder()
+                        .url(httpUrl)
+                        .build();
+                Response response = client.newCall(request).execute();
+                result = response.body().string();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Log.d(TAG, s);
+            if(s.contains("success")){
+                // 이동할 Fragment 선언
+                Se_Application.Localdb.set_dataS("userid", userid_et.getText().toString().trim());
+                Se_Application.Localdb.set_dataS("passwd", passwd_et.getText().toString().trim());
+                Se_Application.Localdb.set_dataB("login", true);
+
+                MainFragment mainFragment = new MainFragment();
+
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
+                        .replace(R.id.mainFragment, mainFragment, "MAIN")
+                        .commit();
+            }
+        }
+    }
 }

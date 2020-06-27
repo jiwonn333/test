@@ -84,9 +84,9 @@ public class MainFragment extends Fragment {
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_noti),
+                        getResources().getDrawable(R.drawable.ic_chat),
                         Color.parseColor("#0000FF")
-                ).title("알")
+                ).title("채팅")
                         .badgeTitle("state")
                         .build()
         );
