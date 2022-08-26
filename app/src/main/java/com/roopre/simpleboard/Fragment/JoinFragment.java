@@ -1,5 +1,6 @@
 package com.roopre.simpleboard.Fragment;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,14 +12,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.roopre.simpleboard.Activity.MainActivity;
 import com.roopre.simpleboard.Public.Se_Application;
 import com.roopre.simpleboard.R;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 
-import androidx.fragment.app.Fragment;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -52,7 +53,7 @@ public class JoinFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_join, container, false);;
+        rootView = inflater.inflate(R.layout.fragment_join, container, false);
 
         profile_iv = rootView.findViewById(R.id.profile_iv);
 
@@ -69,35 +70,41 @@ public class JoinFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.join_btn:
-                if(CheckValid()){
+                if (CheckValid()) {
                     // 입력이 정상적이면 로그인 확인하고 MainFragment 로 이동
-                    new JoinTask().execute();
+                    // new JoinTask().execute();
+                    JoinTask joinTask = new JoinTask();
+                    joinTask.execute(userid_et.getText().toString().trim(), passwd_et.getText().toString().trim());
+                    Log.d("jw", "회원가입 버튼 클릭");
 
+                    Se_Application.Localdb.set_dataS("userid", userid_et.getText().toString().trim());
+                    Se_Application.Localdb.set_dataS("passwd", passwd_et.getText().toString().trim());
+                    ((MainActivity) getActivity()).onBackStackChanged();
                 }
                 break;
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     class JoinTask extends AsyncTask<String, Void, String> {
-
         OkHttpClient client = new OkHttpClient();
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(String... params) { // 스레드에 의해 처리 될 내용을 담기 위한 함수
 
             String result = null;
-
-            HttpUrl httpUrl = new HttpUrl.Builder()
-                    .scheme("http")
-                    .host(Se_Application.Server_URL)
-                    .addPathSegment("user_join.php")
-                    .addQueryParameter("userid", userid_et.getText().toString().trim())
-                    .addQueryParameter("passwd", passwd_et.getText().toString().trim())
-                    .addQueryParameter("nickname", passwd_et.getText().toString().trim())
-                    .build();
             try {
+                HttpUrl httpUrl = new HttpUrl.Builder()
+                        .scheme("http")
+                        .host(Se_Application.Server_URL)
+                        .addPathSegment("user_join.php")
+                        .addQueryParameter("userid", userid_et.getText().toString().trim())
+                        .addQueryParameter("passwd", passwd_et.getText().toString().trim())
+                        .addQueryParameter("nickname", passwd_et.getText().toString().trim())
+                        .build();
+
                 Request request = new Request.Builder()
                         .url(httpUrl)
                         .build();
@@ -112,36 +119,38 @@ public class JoinFragment extends Fragment implements View.OnClickListener {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s) { // AsyncTask의 작업을 시작하기 전 호출(가장 먼저 호출되는 부분)
             super.onPostExecute(s);
 
             Log.d(TAG, s);
-            if(s.contains("success")){
+            if (s.contains("success")) {
                 Se_Application.Localdb.set_dataS("userid", userid_et.getText().toString().trim());
                 Se_Application.Localdb.set_dataS("passwd", passwd_et.getText().toString().trim());
 
-                ((MainActivity)getActivity()).onBackStackChanged();
+                ((MainActivity) getActivity()).onBackStackChanged();
+            } else {
+                Log.e(TAG, s);
             }
         }
     }
 
-    private boolean CheckValid(){
-        if(userid_et.getText().toString().trim().length() < 5){
+    private boolean CheckValid() {
+        if (userid_et.getText().toString().trim().length() < 5) {
             Toast.makeText(getActivity(), "이메일을 입력하세요", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(!Se_Application.emailValidator(userid_et.getText().toString().trim())){
+        } else if (!Se_Application.emailValidator(userid_et.getText().toString().trim())) {
             Toast.makeText(getActivity(), "이메일을 정확하게 입력하세요.", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(passwd_et.getText().toString().trim().length() < 6){
+        } else if (passwd_et.getText().toString().trim().length() < 6) {
             Toast.makeText(getActivity(), "비밀번호를 6자리 이 입력하세요", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(!passwd_et.getText().toString().trim().equals(repasswd_et.getText().toString().trim())){
+        } else if (!passwd_et.getText().toString().trim().equals(repasswd_et.getText().toString().trim())) {
             Toast.makeText(getActivity(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(nickname_et.getText().toString().trim().length() < 1){
+        } else if (nickname_et.getText().toString().trim().length() < 1) {
             Toast.makeText(getActivity(), "닉네임을 입력하세요", Toast.LENGTH_SHORT).show();
             return false;
-        }else {
+        } else {
             return true;
         }
     }

@@ -50,13 +50,13 @@ public class MainFragment extends Fragment {
 
         PopBoardFragment popBoardFragment = new PopBoardFragment();
         BoardListFragment boardListFragment = new BoardListFragment();
-        AlertFragment alertFragment = new AlertFragment();
+        ChatRoomFragment chatRoomFragment = new ChatRoomFragment();
 
 
         fragments.clear();
         fragments.add(popBoardFragment);
         fragments.add(boardListFragment);
-        fragments.add(alertFragment);
+        fragments.add(chatRoomFragment);
 
         mainAdapter = new MainAdapter(getChildFragmentManager(), fragments);
         mainAdapter.notifyDataSetChanged();

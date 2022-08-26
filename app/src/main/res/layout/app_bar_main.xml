@@ -24,7 +24,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textColor="@color/white"
-                android:text="@string/app_name"/>
+                android:text="채팅 어플"/>
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>

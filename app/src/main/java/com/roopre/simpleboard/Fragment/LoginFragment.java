@@ -120,6 +120,7 @@ public class LoginFragment extends Fragment implements CompoundButton.OnCheckedC
                         .replace(R.id.mainFragment, joinFragment, "JOIN")
                         .addToBackStack(null)
                         .commit();
+                Log.d("jw", "회원가입 하러가기 버튼 클릭 됨");
                 break;
         }
     }

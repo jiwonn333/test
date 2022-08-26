@@ -21,7 +21,7 @@ public class Se_Application extends Application {
 
     public void Init_Value() {
         Localdb = new Se_LocalDbConnector(this.getApplicationContext());
-        Server_URL = "13.209.236.238";
+        Server_URL = "10.112.58.138";
     }
 
 
